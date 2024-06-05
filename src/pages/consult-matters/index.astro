@@ -1,0 +1,75 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Action from "../../components/Action.astro";
+import { db, Abogado, Asunto } from "astro:db";
+import { eq } from "astro:db";
+import { Cliente } from "astro:db";
+const abogados = await db.select().from(Abogado);
+const asuntos = await db
+  .select()
+  .from(Asunto)
+  .innerJoin(Abogado, eq(Asunto.abogado_id, Abogado.matricula_id))
+  .innerJoin(Cliente, eq(Asunto.cliente_id, Cliente.dni_id));
+console.log(asuntos);
+---
+
+<Layout title="Asuntos registrados.">
+  <main
+    class="flex flex-col justify-center items-center w-full xl:w-auto mx-auto mb-4"
+  >
+    <h1 class="text-5xl text- cneter text-white mt-12">Asuntos</h1>
+
+    <div
+      class="fixed top-0 z-50 flex items-center justify-center w-full mx-auto mt-32 gap-4"
+    >
+      <table
+        class="w-auto text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+      >
+        <thead
+          class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+        >
+          <tr>
+            <th scope="col" class="px-6 py-3"> Nombre </th>
+            <th scope="col" class="px-6 py-3"> Periodo </th>
+            <th scope="col" class="px-6 py-3"> Estado </th>
+            <th scope="col" class="px-6 py-3"> Abogado asignado </th>
+            <th scope="col" class="px-6 py-3"> Cliente </th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            asuntos.map((asunto) => (
+              <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <th
+                  scope="row"
+                  class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                >
+                  {asunto.Asunto.nombre}
+                </th>
+                <td class="px-6 py-4">{asunto.Asunto.periodo}</td>
+                <td class="px-6 py-4">{asunto.Asunto.estado}</td>
+                <td class="px-6 py-4">{asunto.Abogado.nombre}</td>
+                <td class="px-6 py-4">{asunto.Cliente.nombre}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+      <div class="flex flex-row items-center justify-center gap-6">
+        <div>
+          <Action
+            class="w-auto text-base"
+            as="a"
+            href="/home"
+            rel="noopener noreferrer"
+            aria-label="Ir a la pagina principal"
+          >
+            Ir al inicio
+          </Action>
+        </div>
+      </div>
+    </div>
+
+    <!-- El resto del código se mantiene igual -->
+  </main>
+</Layout>

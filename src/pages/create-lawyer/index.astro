@@ -1,0 +1,107 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { db, Abogado } from "astro:db";
+
+if (Astro.request.method === "POST") {
+  //Crear Abogado
+  const formData = await Astro.request.formData();
+  const nombre = formData.get("nombre");
+  const apellido = formData.get("apellido");
+  const calle = formData.get("calle");
+  const colonia = formData.get("colonia");
+  const numero = formData.get("numero");
+
+  console.log(nombre, apellido, calle, colonia, numero);
+
+  if (
+    typeof nombre === "string" &&
+    typeof apellido === "string" &&
+    typeof calle === "string" &&
+    typeof colonia === "string" &&
+    typeof numero === "string"
+  ) {
+    await db
+      .insert(Abogado)
+      .values({ nombre, apellido, calle, colonia, numero });
+    return Astro.redirect("/home");
+  }
+}
+const abogados = await db.select().from(Abogado);
+---
+
+<Layout title="Creador de abogados">
+  <h2 class="text-3xl font-bold text-center mt-8 mb-12">Crear un abogado</h2>
+  <form class="max-w-sm mx-auto" method="post">
+    <div class="mb-5">
+      <label for="nombre" class="block mb-2 text-sm font-medium text-gray-900"
+        >Nombre</label
+      >
+      <input
+        type="text"
+        id="nombre"
+        name="nombre"
+        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+        placeholder="Nombre del abogado"
+        required
+      />
+    </div>
+    <div class="mb-5">
+      <label for="apellido" class="block mb-2 text-sm font-medium text-gray-900"
+        >Apellido</label
+      >
+      <input
+        type="text"
+        id="apellido"
+        name="apellido"
+        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+        placeholder="Apellido del abogado"
+        required
+      />
+    </div>
+    <div class="mb-5">
+      <label for="calle" class="block mb-2 text-sm font-medium text-gray-900"
+        >Calle</label
+      >
+      <input
+        type="text"
+        id="calle"
+        name="calle"
+        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+        required
+        placeholder="Calle del abogado"
+      />
+    </div>
+    <div class="mb-5">
+      <label for="colonia" class="block mb-2 text-sm font-medium text-gray-900"
+        >Colonia</label
+      >
+      <input
+        type="text"
+        id="colonia"
+        name="colonia"
+        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+        required
+        placeholder="Colonia del abogado"
+      />
+    </div>
+    <div class="mb-5">
+      <label for="numero" class="block mb-2 text-sm font-medium text-gray-900"
+        >Numero</label
+      >
+      <input
+        type="text"
+        id="numero"
+        name="numero"
+        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+        required
+        placeholder="Numero de casa del abogado"
+      />
+    </div>
+
+    <button
+      type="submit"
+      class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+      >Registrar nuevo abogado</button
+    >
+  </form>
+</Layout>

@@ -1,0 +1,104 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Sistema de abogados">
+  <main>
+    <section class="mt-32 flex flex-col justify-center items-center w-max-96">
+      <h1
+        class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-black md:text-5xl lg:text-6xl"
+      >
+        Sistema de Abogados.
+      </h1>
+      <p
+        class="mb-6 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400"
+      >
+        Proyecto de sistema de abogados de la materia fundamnetos de Bases de
+        datos.
+      </p>
+      <div class="w-auto flex flex-wrap justify-between items-center gap-8">
+        <a
+          href="/create-lawyer"
+          class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+        >
+          <h5
+            class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
+          >
+            Crear un abogado
+          </h5>
+          <p class="font-normal text-gray-700 dark:text-gray-400">
+            Aqui podras crear un abogado.
+          </p>
+        </a>
+        <a
+          href="/create-client"
+          class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+        >
+          <h5
+            class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
+          >
+            Crear un cliente
+          </h5>
+          <p class="font-normal text-gray-700 dark:text-gray-400">
+            Aqui podras crear un cliente.
+          </p>
+        </a>
+        <a
+          href="/create-matter"
+          class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+        >
+          <h5
+            class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
+          >
+            Crear un asunto
+          </h5>
+          <p class="font-normal text-gray-700 dark:text-gray-400">
+            Aqui podras crear un asunto.
+          </p>
+        </a>
+      </div>
+      <div class="mt-12 flex justify-center items-center gap-8">
+        <a
+          href="/consult-lawyers"
+          class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+        >
+          <h5
+            class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
+          >
+            Consultar abogados
+          </h5>
+          <p class="font-normal text-gray-700 dark:text-gray-400">
+            Aqui podras consultar los abogados.
+          </p>
+        </a>
+
+        <a
+          href="/consult-clients"
+          class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+        >
+          <h5
+            class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
+          >
+            Consultar clientes
+          </h5>
+          <p class="font-normal text-gray-700 dark:text-gray-400">
+            Aqui podras consultar los clientes.
+          </p>
+        </a>
+        <a
+          href="/consult-matters"
+          class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+        >
+          <h5
+            class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
+          >
+            Consultar asuntos
+          </h5>
+          <p class="font-normal text-gray-700 dark:text-gray-400">
+            Aqui podras consultar los asuntos.
+          </p>
+        </a>
+      </div>
+    </section>
+  </main>
+</Layout>

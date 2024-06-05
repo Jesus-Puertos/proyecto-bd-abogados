@@ -1,0 +1,121 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { db, Abogado, Cliente, Asunto } from "astro:db";
+
+if (Astro.request.method === "POST") {
+  //Crear Asunto
+  const formData = await Astro.request.formData();
+  const nombre = formData.get("nombre");
+  const periodo = formData.get("periodo");
+  const estado = formData.get("estado");
+  const abogado_id = formData.get("abogado_id");
+  const cliente_id = formData.get("cliente_id");
+
+  console.log(nombre, periodo, estado, abogado_id, cliente_id);
+
+  if (
+    typeof nombre === "string" &&
+    typeof periodo === "string" &&
+    typeof estado === "string" &&
+    typeof abogado_id === "string" &&
+    typeof cliente_id === "string"
+  ) {
+    await db
+      .insert(Asunto)
+      .values({ nombre, periodo, estado, abogado_id, cliente_id });
+    return Astro.redirect("/home");
+  }
+}
+const abogados = await db.select().from(Abogado);
+const clientes = await db.select().from(Cliente);
+---
+
+<Layout title="Creador de abogados">
+  <form class="max-w-sm mx-auto" method="post">
+    <div class="mb-5">
+      <label for="nombre" class="block mb-2 text-sm font-medium text-gray-900"
+        >Nombre</label
+      >
+      <input
+        type="text"
+        id="nombre"
+        name="nombre"
+        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+        placeholder="Karen Florentino"
+        required
+      />
+    </div>
+    <div class="mb-5">
+      <label for="periodo" class="block mb-2 text-sm font-medium text-gray-900"
+        >Periodo</label
+      >
+      <input
+        type="text"
+        id="periodo"
+        name="periodo"
+        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+        required
+      />
+    </div>
+    <div class="mb-5">
+      <label for="estado" class="block mb-2 text-sm font-medium text-gray-900"
+        >Estado</label
+      >
+      <input
+        type="text"
+        id="estado"
+        name="estado"
+        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+        required
+      />
+    </div>
+    <div class="mb-5">
+      <label
+        for="abogado_id"
+        class="block mb-2 text-sm font-medium text-gray-900"
+        >Seleccionar Abogado</label
+      >
+      <select
+        name="abogado_id"
+        id="abogado_id"
+        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+      >
+        <option value="" disabled selected> Seleccionar abogado </option>
+        {
+          abogados.map((abogado) => (
+            <>
+              <option value={abogado.matricula_id}>{abogado.nombre}</option>
+            </>
+          ))
+        }
+      </select>
+    </div>
+    <div class="mb-5">
+      <label
+        for="cliente_id"
+        class="block mb-2 text-sm font-medium text-gray-900"
+        >Seleccionar cliente</label
+      >
+      <select
+        name="cliente_id"
+        id="cliente_id"
+        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+      >
+        <option value="" disabled selected> Seleccionar cliente </option>
+        {
+          clientes.map((cliente) => (
+            <>
+              <option value={cliente.dni_id}>{cliente.nombre}</option>
+            </>
+          ))
+        }
+      </select>
+    </div>
+
+    <button
+      type="submit"
+      class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+      >Registrar nuevo asunto</button
+    >
+  </form>
+</Layout>
